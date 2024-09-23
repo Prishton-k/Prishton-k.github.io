@@ -12,5 +12,5 @@ function setup() {
 function draw() {
   background(220);
   fill("blue")
-  square(x,y,100);
+  square(mouseX,mouseY,10);
 }
