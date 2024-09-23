@@ -7,9 +7,10 @@ let y = 200;
 
 function setup() {
   createCanvas(400, 400);
-  square(x,y,50)
 }
 
 function draw() {
   background(220);
+  fill("blue")
+  square(x,y,100);
 }
