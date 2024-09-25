@@ -5,12 +5,11 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let rTime = 15000;
-let gTime = 30000;
-let yTime = 5000;
-let swapStateIFNeeded;
-let lastSwitchedTime = 0;
-let colourstate = 1;
+let lightState = "green";
+let lastTimeSwitched = 0;
+const GREEN_LIGHT_DURATION = 30000;
+const YELLOW_LIGHT_DURATION = 1000;
+const RED_LIGHT_DURATION = 40000;
 
 function setup() {
   createCanvas(600, 600);
@@ -19,8 +18,38 @@ function setup() {
 function draw() {
   background(255);
   drawOutlineOfLights();
-  swapStateIFNeeded();
-  showbackground();
+  switchStateIfNeeded();
+  displayCorrectLight();
+}
+
+function switchStateIfNeeded() {
+  if (lightState === "green" && millis() > lastTimeSwitched + GREEN_LIGHT_DURATION) {
+    lightState = "yellow";
+    lastTimeSwitched = millis();
+  }
+  else if (lightState === "yellow" && millis() > lastTimeSwitched + YELLOW_LIGHT_DURATION) {
+    lightState = "red";
+    lastTimeSwitched = millis();
+  }
+  else if (lightState === "red" && millis() > lastTimeSwitched + RED_LIGHT_DURATION) {
+    lightState = "green";
+    lastTimeSwitched = millis();
+  }
+}
+
+function displayCorrectLight() {
+  if (lightState === "green") {
+    fill("green");
+    ellipse(width/2, height/2 + 65, 50, 50); //bottom
+  }
+  else if (lightState === "yellow") {
+    fill("yellow");
+    ellipse(width/2, height/2, 50, 50); //middle
+  }
+  else if (lightState === "red") {
+    fill("red");
+    ellipse(width/2, height/2 - 65, 50, 50); //top
+  }
 }
 
 function drawOutlineOfLights() {
@@ -34,13 +63,4 @@ function drawOutlineOfLights() {
   ellipse(width/2, height/2 - 65, 50, 50); //top
   ellipse(width/2, height/2, 50, 50); //middle
   ellipse(width/2, height/2 + 65, 50, 50); //bottom
-}
-function swapStateIfNeeded() {
-  if (millis() > lastSwitchedTime + yTime&& colourstate === 1) {
-    drawOutlineOfLights()
-    ellipse(width/2, height/2, 50, 50); 
-    fill(255,0,0);
-    lastSwitchedTime = millis();
-    
-  }
 }
