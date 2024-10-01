@@ -1,6 +1,7 @@
-// State variables
-let circleSize = 50;
 let circleColor = 0;
+let circleSize = 50;
+let shape = 'circle'; // New variable to track the shape
+
 
 function setup() {
   createCanvas(400, 400);
@@ -8,34 +9,37 @@ function setup() {
 }
 
 function draw() {
-  background(255);
-  drawCircle();
+  background(170);
+  drawShape();
   handleKeyboardInput();
 }
 
-function drawCircle() {
-  // Circle follows the mouse
+function drawShape() {
   fill(circleColor);
-  ellipse(mouseX, mouseY, circleSize, circleSize);
+  if (shape === 'circle') {
+    ellipse(mouseX, mouseY, 50, 50);
+  } else if (shape === 'rect') {
+    rect(mouseX - circleSize*2, mouseY - circleSize, circleSize, circleSize);
+  } 
 }
 
 function handleKeyboardInput() {
-  // Change circle size based on keyboard input
   if (keyIsDown(UP_ARROW)) {
-    circleSize += 1;
+    circleSize += 5;
   } else if (keyIsDown(DOWN_ARROW)) {
-    circleSize -= 1;
+    circleSize -= 5;
   }
   
-  // Change circle color based on keyboard input
-  if (keyIsDown('r')) {
-    circleColor = 255;
-  } else if (keyIsDown('b')) {
-    circleColor = 0;
+  if (key === 'c') {
+    noStroke();
+    circleColor = color(random(255), random(255), random(255));
   }
-}
-
-function mouseWheel(event) {
-  // Optional: handle mouse wheel input (Extra for Experts)
-  // circleSize += event.delta;
-}
+  
+  if (key === 'ArrowLeft') {
+    shape = 'rect';
+  } 
+  if (key === 'ArrowRight') {
+    shape = 'circle';
+  }
+  }
+  
