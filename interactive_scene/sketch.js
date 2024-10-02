@@ -1,7 +1,13 @@
-let circleColor = 0;
-let circleSize = 50;
-let shape = 'circle'; // New variable to track the shape
+//Digdarshan KC
+//Computer Science 30
+//October 1 2024
+// Mr Dan Schellenberg 
+//Interactive scene
 
+
+let circleSize = 50;
+let circleColor = 0;
+let shape = 'circle'; // New variable to track the shape
 
 function setup() {
   createCanvas(400, 400);
@@ -9,7 +15,7 @@ function setup() {
 }
 
 function draw() {
-  background(170);
+  background(255);
   drawShape();
   handleKeyboardInput();
 }
@@ -17,10 +23,12 @@ function draw() {
 function drawShape() {
   fill(circleColor);
   if (shape === 'circle') {
-    ellipse(mouseX, mouseY, 50, 50);
+    ellipse(mouseX, mouseY, circleSize, circleSize);
   } else if (shape === 'rect') {
-    rect(mouseX - circleSize*2, mouseY - circleSize, circleSize, circleSize);
-  } 
+    rect(mouseX - circleSize/2, mouseY - circleSize/2, circleSize, circleSize);
+  } else if (shape === 'square') {
+    rect(mouseX - circleSize/2, mouseY - circleSize/2, circleSize, circleSize);
+  }
 }
 
 function handleKeyboardInput() {
@@ -37,9 +45,8 @@ function handleKeyboardInput() {
   
   if (key === 'ArrowLeft') {
     shape = 'rect';
-  } 
-  if (key === 'ArrowRight') {
-    shape = 'circle';
+  } else if (key === 'ArrowRight') {
+    shape = 'square';
   }
   }
   
