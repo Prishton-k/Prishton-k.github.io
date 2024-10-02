@@ -43,11 +43,11 @@ function handleKeyboardInput() {//change the size of object
   }
   
   
-  } 
+  
   if (key === 'Arrowleft'); {//When click the left arrow change the circle into square
     shape = 'rect';
   }
   if (key === 'ArrowRight'){// If clicks the right arrow change the object back to circle
     shape = 'circle';
   }
-  
+}
