@@ -26,8 +26,6 @@ function drawShape() {
     ellipse(mouseX, mouseY, circleSize, circleSize);
   } else if (shape === 'rect') {
     rect(mouseX - circleSize/2, mouseY - circleSize/2, circleSize, circleSize);
-  } else if (shape === 'square') {
-    rect(mouseX - circleSize/2, mouseY - circleSize/2, circleSize, circleSize);
   }
 }
 
@@ -43,10 +41,10 @@ function handleKeyboardInput() {
     circleColor = color(random(255), random(255), random(255));
   }
   
-  if (key === 'ArrowLeft') {
-    shape = 'rect';
-  } else if (key === 'ArrowRight') {
+  
+  } 
+  if (key === 'ArrowRight'); {
     shape = 'square';
   }
-  }
+  
   
