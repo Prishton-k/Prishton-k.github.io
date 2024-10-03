@@ -5,5 +5,6 @@
 
 - [Image Demo](image-demo)
 - [Traffic lights](traffic-lights)
+- [Bouncing Ball](bouncing-balls)
 # Projects
 - [intractive scene](interactive_scene)
