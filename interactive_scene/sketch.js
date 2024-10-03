@@ -35,7 +35,3 @@ function handleKeyboardInput() {
   }
 }
 
-function mouseWheel(event) {
-  // Optional: handle mouse wheel input (Extra for Experts)
-  // circleSize += event.delta;
-}
