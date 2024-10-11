@@ -9,6 +9,7 @@
 - [Generative Art](Art)
 - [Perlin Noise ball](perlin)
 - [Terrain Generation](terrain)
+- [Ball Object Demo](08-Bubble)
 # Projects
 - [intractive scene](interactive_scene)
 - [Arrays and Object Notation](array_notation)
