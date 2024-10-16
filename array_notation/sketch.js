@@ -10,8 +10,13 @@ function setup() {
 }
 
 function draw() {
-  background();
-  circle(50,50,100,100);
+  background(225);
+  noStroke();
+  fill(170);
+  circle(50,70,100);
 }
+
+
+
 
 
