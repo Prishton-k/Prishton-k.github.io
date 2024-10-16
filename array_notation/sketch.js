@@ -11,10 +11,9 @@ function setup() {
 
 function draw() {
   background(225);
-  noStroke();
   fill(255);
   circle(800,370,200);
-  line(100,100,100)
+  line( 800,0, 800, 780);
 }
 
 
