@@ -10,6 +10,7 @@
 - [Perlin Noise ball](perlin)
 - [Terrain Generation](terrain)
 - [Ball Object Demo](08-Bubble)
+- [Sound effect](09-Sound-Fx)
 # Projects
 - [intractive scene](interactive_scene)
 - [Arrays and Object Notation](array_notation)
