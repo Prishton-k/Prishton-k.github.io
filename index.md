@@ -11,6 +11,7 @@
 - [Terrain Generation](terrain)
 - [Ball Object Demo](08-Bubble)
 - [Sound effect](09-Sound-Fx)
+- [Translate and Rotate demo](Rotate)
 # Projects
 - [intractive scene](interactive_scene)
 - [Arrays and Object Notation](array_notation)

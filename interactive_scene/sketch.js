@@ -4,7 +4,6 @@
 // Mr Dan Schellenberg 
 //Interactive scene
 
-
 let circleSize = 50;
 let circleColor = 0;
 let shape = "circle"; // New variable to track the shape
