@@ -2,7 +2,11 @@
 // Digdarshan Kc
 // Date
 //
-// Extra for Experts:
+// Extra for Experts: * Extra for Experts:
+//  This project includes several enhanced features:
+// Power-ups that increase paddle speed temporarily.
+//  Adaptive AI that becomes more challenging as the player scores more points.
+// A scoreboard that displays current scores and updates dynamically.
  
 
 
