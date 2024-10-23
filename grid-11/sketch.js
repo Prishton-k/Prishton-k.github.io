@@ -9,7 +9,7 @@
 //             [0, 1, 1, 0]];
 
 let grid;
-const GRID_SIZE = 10;
+const GRID_SIZE = 400;
 let cellSize;
 
 function setup() {
@@ -23,9 +23,40 @@ function setup() {
   grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
 }
 
+function windowResized() {
+  if (windowWidth < windowHeight) {
+    resizeCanvas(windowWidth, windowWidth);
+  }
+  else {
+    resizeCanvas(windowHeight, windowHeight);
+  }
+  cellSize = height/GRID_SIZE;
+}
+
 function draw() {
   background(220);
   displayGrid();
+}
+
+function mousePressed() {
+  let x = Math.floor(mouseX/cellSize);
+  let y = Math.floor(mouseY/cellSize);
+
+  if (grid[y][x] === 1) {
+    grid[y][x] = 0;
+  }
+  else {
+    grid[y][x] = 1;
+  }
+}
+
+function keyPressed() {
+  if (key === "r") {
+    grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
+  }
+  if (key === "e") {
+    grid = generateEmptyGrid(GRID_SIZE, GRID_SIZE);
+  }
 }
 
 function displayGrid() {
@@ -41,15 +72,6 @@ function displayGrid() {
     }
   }
 }
-function keyPressed(){
-  if(key ==="r"){
-    grid = generateRandomGrid(GRID_SIZE,GRID_SIZE);
-  }
-  if(key==="e"){
-    grid = generateEmptyGrid(GRID_SIZE,GRID_SIZE);
-  }
-}
-
 
 function generateRandomGrid(cols, rows) {
   let newGrid = [];
@@ -67,6 +89,7 @@ function generateRandomGrid(cols, rows) {
   }
   return newGrid;
 }
+
 function generateEmptyGrid(cols, rows) {
   let newGrid = [];
   for (let y = 0; y < rows; y++) {
