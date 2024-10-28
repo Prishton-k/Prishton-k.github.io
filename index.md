@@ -13,6 +13,8 @@
 - [Sound effect](09-Sound-Fx)
 - [Translate and Rotate demo](Rotate)
 - [Grid Demo](grid-11)
+- [Game life](game-of-life)
+- [Rectangle](rectangle_grid)
 # Projects
 - [intractive scene](interactive_scene)
 - [Arrays and Object Notation](array_notation)
