@@ -15,6 +15,7 @@
 - [Grid Demo](grid-11)
 - [Game life](game-of-life)
 - [Rectangle grid](rectangle_grid1)
+-[character grid](character_move)
 # Projects
 - [intractive scene](interactive_scene)
 - [Arrays and Object Notation](array_notation)
