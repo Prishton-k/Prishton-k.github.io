@@ -1,26 +1,25 @@
-// Grid Demo
+// Character in Grid Demo
 // Dan Schellenberg
 // Oct 22, 2024
 
-// if hardcoding the grid, use something like this:
-// let grid = [[1, 0, 1, 0],
-//             [0, 0, 1, 1],
-//             [1, 1, 1, 0],
-//             [0, 1, 1, 0]];
-
 let grid;
-const GRID_SIZE = 40;
+const GRID_SIZE = 10;
 let cellSize;
 let shouldToggleNeighbours = false;
-let autoPlayIsOn = false;
-let renderOnFrameMultiple = 5;
-let gosperGun;
+const OPEN_TILE = 0;
+const IMPASSIBLE_TILE = 1;
 const PLAYER_TILE = 9;
-let player= {
-  x:0,
-  y:0,
-}
+let player = {
+  x: 0,
+  y: 0,
+};
+let grassImg;
+let pathImg;
 
+function preload() {
+  grassImg = loadImage("grass.JPG");
+  pathImg = loadImage("path.JPG");
+}
 
 function setup() {
   if (windowWidth < windowHeight) {
@@ -31,6 +30,9 @@ function setup() {
   }
   cellSize = height/GRID_SIZE;
   grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
+
+  //add player to the grid
+  grid[player.y][player.x] = PLAYER_TILE;
 }
 
 function windowResized() {
@@ -45,9 +47,6 @@ function windowResized() {
 
 function draw() {
   background(220);
-  if (autoPlayIsOn && frameCount % renderOnFrameMultiple === 0) {
-    grid = updateGrid();
-  }
   displayGrid();
 }
 
@@ -70,11 +69,11 @@ function mousePressed() {
 function toggleCell(x, y) {
   //make sure the cell you're toggling is in the grid
   if (x >= 0 && y >= 0 && x < GRID_SIZE && y < GRID_SIZE) {
-    if (grid[y][x] === 1) {
-      grid[y][x] = 0;
+    if (grid[y][x] === IMPASSIBLE_TILE) {
+      grid[y][x] = OPEN_TILE;
     }
-    else {
-      grid[y][x] = 1;
+    else if (grid[y][x] === OPEN_TILE) {
+      grid[y][x] = IMPASSIBLE_TILE;
     }
   }
 }
@@ -89,72 +88,56 @@ function keyPressed() {
   if (key === "n") {
     shouldToggleNeighbours = !shouldToggleNeighbours;
   }
-  if (key === " ") {
-    grid = updateGrid();
+  if (key === "w") {
+    //move up
+    movePlayer(player.x, player.y - 1);
+  }
+  if (key === "s") {
+    //move down
+    movePlayer(player.x, player.y + 1);
+  }
+  if (key === "d") {
+    //move right
+    movePlayer(player.x + 1, player.y);
   }
   if (key === "a") {
-    autoPlayIsOn = !autoPlayIsOn;
+    //move left
+    movePlayer(player.x - 1, player.y);
   }
- 
 }
 
-function updateGrid() {
-  //make a new array to hold the next turn
-  let nextTurn = generateEmptyGrid(GRID_SIZE, GRID_SIZE);
-
-  //look at every cell
-  for (let y = 0; y < GRID_SIZE; y++) {
-    for (let x = 0; x < GRID_SIZE; x++) {
-      //count it's neighbours
-      let neighbours = 0;
-
-      for (let i = -1; i <= 1; i++) {
-        for (let j = -1; j <= 1; j++) {
-          //don't fall of the edge
-          if (y+i >= 0 && y+i < GRID_SIZE && x+j >= 0 && x+j < GRID_SIZE) {
-            neighbours += grid[y+i][x+j];
-          }
-        }
-      }
-
-      //don't count yourself
-      neighbours -= grid[y][x];
-
-      //apply the rules 
-      if (grid[y][x] === 0) {
-        //currently dead
-        if (neighbours === 3) {
-          nextTurn[y][x] = 1;
-        }
-        else {
-          nextTurn[y][x] = 0;
-        }
-      }
-
-      if (grid[y][x] === 1) {
-        //currently alive
-        if (neighbours === 2 || neighbours === 3) {
-          nextTurn[y][x] = 1;
-        }
-        else {
-          nextTurn[y][x] = 0;
-        }
-      }
-    }
+function movePlayer(x, y) {
+  //don't run off the screen, and only walk on open tiles
+  if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE && 
+      grid[y][x] === OPEN_TILE) {
+    //when moving, reset to an open spot
+    grid[player.y][player.x] = OPEN_TILE;
+  
+    //keep track of player location
+    player.x = x;
+    player.y = y;
+  
+    //put player in grid
+    grid[player.y][player.x] = PLAYER_TILE;
   }
-  return nextTurn;
+
 }
 
 function displayGrid() {
   for (let y = 0; y < GRID_SIZE; y++) {
     for (let x = 0; x < GRID_SIZE; x++) {
-      if (grid[y][x] === 1) {
-        fill("black");
+      if (grid[y][x] === IMPASSIBLE_TILE) {
+        // fill("black");
+        image(grassImg, x*cellSize, y*cellSize, cellSize, cellSize);
       }
-      else if (grid[y][x] === 0) {
-        fill("white");
+      else if (grid[y][x] === OPEN_TILE) {
+        // fill("white");
+        image(pathImg, x*cellSize, y*cellSize, cellSize, cellSize);
       }
-      square(x * cellSize, y * cellSize, cellSize);
+      else if (grid[y][x] === PLAYER_TILE) {
+        fill("red");
+        square(x * cellSize, y * cellSize, cellSize);
+      }
     }
   }
 }
@@ -166,10 +149,10 @@ function generateRandomGrid(cols, rows) {
     for (let x = 0; x < cols; x++) {
       //choose either 0 or 1, each 50% of the time
       if (random(100) < 50) {
-        newGrid[y].push(1);
+        newGrid[y].push(IMPASSIBLE_TILE);
       }
       else {
-        newGrid[y].push(0);
+        newGrid[y].push(OPEN_TILE);
       }
     }
   }
@@ -181,7 +164,7 @@ function generateEmptyGrid(cols, rows) {
   for (let y = 0; y < rows; y++) {
     newGrid.push([]);
     for (let x = 0; x < cols; x++) {
-      newGrid[y].push(0);
+      newGrid[y].push(OPEN_TILE);
     }
   }
   return newGrid;
