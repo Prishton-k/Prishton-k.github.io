@@ -1,7 +1,6 @@
 // Array Notation
 // Digdarshan Kc
-// Date
-<<<<<<< Updated upstream
+// Date Updated upstream
 //
 // Extra for Experts: * Extra for Experts:
 //  This project includes several enhanced features:
@@ -86,10 +85,12 @@ class Paddle {
     if (abs(positionDiff) > aiSpeed) {
       if (positionDiff > 0) {
         this.y += aiSpeed;  // Move down if ball is lower
-      } else {
+      } 
+      else {
         this.y -= aiSpeed;  // Move up if ball is higher
       }
-    } else {
+    }
+    else {
       this.y = targetPosition;  // If close, directly set the position
     }
     
@@ -162,94 +163,20 @@ function displayScores() {
   textSize(24);
   textAlign(CENTER, CENTER);
   text("Player: " + playerScore, width / 4, 30);
-  text("Computer: " + computerScore, (3 * width) / 4, 30);
+  text("Computer: " + computerScore,3 * width / 4, 30);
 }
 
 function increaseBallSpeed() {
   // Check if 10 seconds have passed
   if (millis() - lastSpeedIncreaseTime > ballSpeedIncreaseInterval) {
     // Increase the ball speed based on current movement
-    ball.xSpeed *= 1.1;  // 10% increase
-    ball.ySpeed *= 1.1;
+    ball.xSpeed *= 0.1;  // 10% increase
+    ball.ySpeed *= 0.1;
     lastSpeedIncreaseTime = millis();  // Reset timer
     console.log("Ball speed increased: " + ball.xSpeed.toFixed(2) + ", " + ball.ySpeed.toFixed(2));
-=======
-// Extra for Experts:
-// - Implemented a feature that gives the player hints based on their previous guesses.
-// - Added a function to reset the game without reloading the page.
 
-let game = {
-  secretNumber: Math.floor(Math.random() * 100) + 1, // Random number between 1 and 100
-  guesses: [], // Array to store the player's guesses
-  maxGuesses: 3, // Maximum number of guesses allowed
-
-  // Function to make a guess
-  makeGuess: function(guess) {
-    this.guesses.push(guess); // Store the guess in the array
-    if (this.guesses.length > this.maxGuesses) {
-      console.log("You've exceeded the maximum number of guesses!");
-      return true; // Indicate game over
-    }
-    if (guess < this.secretNumber) {
-      console.log("Too low! Try again.");
-    } 
-    else if (guess > this.secretNumber) {
-      console.log("Too high! Try again.");
-    } 
-    else {
-      console.log(`Congratulations! You've guessed the number ${this.secretNumber} in ${this.guesses.length} tries.`);
-      return true; // Indicate game over
-    }
-    return false; // Game continues
-  },
-
-  // Function to display the guesses
-  displayGuesses: function() {
-    console.log("Your guesses: " + this.guesses.join(", "));
-  },
-
-  // Function to reset the game
-  resetGame: function() {
-    this.secretNumber = Math.floor(Math.random() * 100) + 1;
-    this.guesses = [];
-    console.log("The game has been reset. A new secret number has been generated.");
-  }
-};
-
-// Main game loop
-function draw() {
-  let guess = prompt("Guess a number between 1 and 100 (or type 'exit' to quit):");
-  
-  if (guess === 'exit') {
-    console.log("Thanks for playing!");
-    clearInterval(gameInterval); // Stop the game loop
-    return; // Exit the function
   }
 
-  let parsedGuess = parseInt(guess);
-  if (!isNaN(parsedGuess)) {
-    let gameOver = game.makeGuess(parsedGuess);
-    game.displayGuesses();
-
-    // Check if the game is over
-    if (gameOver || game.guesses.length >= game.maxGuesses) {
-      console.log("Game over! The secret number was: " + game.secretNumber);
-      clearInterval(gameInterval); // Stop the game loop
-      // Optionally reset the game after a short pause
-      setTimeout(() => {
-        game.resetGame();
-        gameInterval = setInterval(draw, 1000); // Restart the game loop
-      }, 3000);
-    }
-  } 
-  else {
-    console.log("Please enter a valid number.");
->>>>>>> Stashed changes
-  }
+  // Call the draw function repeatedly
+  let gameInterval = setInterval(draw, 1000);
 }
-
-// Call the draw function repeatedly
-let gameInterval = setInterval(draw, 1000);
-
-
-

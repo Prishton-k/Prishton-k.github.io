@@ -4,18 +4,20 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
-
+let square;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
   background(220);
-  snake();
-}
-
-function snake(){
   square(50,50,50);
+  squareMove();
 }
 
-if 
+
+function suqareMove(){
+  if (keycode==="w"){
+    square +=5;
+  }
+}
