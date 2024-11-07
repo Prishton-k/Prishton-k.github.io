@@ -14,7 +14,8 @@ let gameOver = false;
 
 function setup() {
   createCanvas(400, 400);
-  frameRate(10); // Initial speed
+  // Initial speed
+  frameRate(10); 
   cols = floor(width / gridSize);
   rows = floor(height / gridSize);
   snake = new Snake();
@@ -47,13 +48,16 @@ function draw() {
   snake.show();
   
   fill(foodColor);
-  ellipse(food.x + gridSize / 2, food.y + gridSize / 2, gridSize, gridSize); // Circular food
+  // Circular food
+  ellipse(food.x + gridSize / 2, food.y + gridSize / 2, gridSize, gridSize);
   
   if (snake.eat(food)) {
     score++;
-    frameRate(10 + score * 0.5); // Increase speed as score increases
+    frameRate(10 + score * 0.5); 
+    // Increase speed as score increases
     foodLocation();
-    background(random(255), random(255), random(255)); // Change background color on eating
+    // Change background color on eating
+    background(random(255), random(255), random(255)); 
   }
   
   if (snake.endGame()) {
@@ -62,19 +66,24 @@ function draw() {
   
   fill(0);
   textSize(16);
-  text("Score: " + score, 10, 20); // Display score
+  // Display score
+  text("Score: " + score, 10, 20); 
 }
 
 function keyPressed() {
   if (keyCode === UP_ARROW && snake.ydir === 0) {
     snake.setDir(0, -1);
-  } else if (keyCode === DOWN_ARROW && snake.ydir === 0) {
+  } 
+  else if (keyCode === DOWN_ARROW && snake.ydir === 0) {
     snake.setDir(0, 1);
-  } else if (keyCode === LEFT_ARROW && snake.xdir === 0) {
+  } 
+  else if (keyCode === LEFT_ARROW && snake.xdir === 0) {
     snake.setDir(-1, 0);
-  } else if (keyCode === RIGHT_ARROW && snake.xdir === 0) {
+  } 
+  else if (keyCode === RIGHT_ARROW && snake.xdir === 0) {
     snake.setDir(1, 0);
-  } else if (key === 'R' || key === 'r') {
+  } 
+  else if (key === 'R' || key === 'r') {
     restartGame();
   }
 }
@@ -84,7 +93,7 @@ function restartGame() {
   gameOver = false;
   snake = new Snake();
   foodLocation();
-  frameRate(10); // Reset speed
+  frameRate(10); 
 }
 
 class Snake {
@@ -93,7 +102,8 @@ class Snake {
     this.body[0] = createVector(floor(cols / 2), floor(rows / 2));
     this.xdir = 0;
     this.ydir = 0;
-    this.growth = 0; // Growth counter to control segments added when eating
+    // Growth counter to control segments added when eating
+    this.growth = 0; 
   }
 
   setDir(x, y) {
@@ -112,13 +122,15 @@ class Snake {
     // Remove the tail unless the snake is growing
     if (this.growth > 0) {
       this.growth--;
-    } else {
+    }
+    else {
       this.body.shift();
     }
   }
 
   grow() {
-    this.growth += 1; // Increase the growth counter
+    // Increase the growth counter
+    this.growth += 1; 
   }
 
   eat(pos) {
