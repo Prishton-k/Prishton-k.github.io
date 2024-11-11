@@ -38,7 +38,7 @@ function draw() {
   snake.show();
 
   // Draw the food
-  fill(255, 0, 0);
+  fill(foodColor);
   ellipse(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2, gridSize, gridSize);
 
   fill(0);
