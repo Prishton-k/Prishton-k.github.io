@@ -58,6 +58,8 @@ function placeFood() {
     let spot = random(emptyCells); // Pick a random empty cell
     food = spot;
     grid[food.y][food.x] = 2; // Mark food on the grid
+    // Assign a random color to the food
+    foodColor = color(random(255), random(255), random(255));
   } else {
     gameOver = true; // No space left for food
   }
