@@ -1,32 +1,22 @@
-// Snake game
-// Digdarshan KC
-// 30th Oct 2024
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-let snake;
-let food;
+let grid;
 let gridSize = 20; // Size of each grid cell
 let cols, rows;
+let snake;
+let food;
 let score = 0;
-let foodColor;
 let gameOver = false;
 
 function setup() {
   createCanvas(400, 400);
-  // Initial speed
-  frameRate(10); 
   cols = floor(width / gridSize);
   rows = floor(height / gridSize);
-  snake = new Snake();
-  foodLocation();
-}
+  frameRate(10);
 
-function foodLocation() {
-  food = createVector(floor(random(cols)), floor(random(rows)));
-  food.mult(gridSize);
-  // Random color for each food
-  foodColor = color(random(255), random(255), random(255));
+  // Initialize grid as a 2D array
+  grid = Array.from({ length: rows }, () => Array(cols).fill(0));
+
+  snake = new Snake();
+  placeFood();
 }
 
 function draw() {
@@ -43,120 +33,127 @@ function draw() {
   }
 
   background(220);
-  
+
   snake.update();
   snake.show();
-  
+
+  // Draw the food
   fill(foodColor);
-  // Circular food
-  ellipse(food.x + gridSize / 2, food.y + gridSize / 2, gridSize, gridSize);
-  
-  if (snake.eat(food)) {
-    score++;
-    frameRate(10 + score * 0.5); 
-    // Increase speed as score increases
-    foodLocation();
-    // Change background color on eating
-    background(random(255), random(255), random(255)); 
-  }
-  
-  if (snake.endGame()) {
-    gameOver = true;
-  }
-  
+  ellipse(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2, gridSize, gridSize);
+
   fill(0);
   textSize(16);
+<<<<<<< HEAD
   // Display score for how mouch food you have 
   text("Score: " + score, 10, 20); 
+=======
+  text("Score: " + score, 10, 20);
+}
+
+function placeFood() {
+  let emptyCells = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === 0) emptyCells.push({ x: c, y: r }); // Track empty cells
+    }
+  }
+
+  if (emptyCells.length > 0) {
+    let spot = random(emptyCells); // Pick a random empty cell
+    food = spot;
+    grid[food.y][food.x] = 2; // Mark food on the grid
+    // Assign a random color to the food
+    foodColor = color(random(255), random(255), random(255));
+  } else {
+    gameOver = true; // No space left for food
+  }
+>>>>>>> e4c4aa003e6470e0442b544e319f8c8156f6c02b
 }
 
 function keyPressed() {
-  if (keyCode === UP_ARROW && snake.ydir === 0) {
+  if (keyCode === UP_ARROW && snake.dir.y === 0) {
     snake.setDir(0, -1);
-  } 
-  else if (keyCode === DOWN_ARROW && snake.ydir === 0) {
+  } else if (keyCode === DOWN_ARROW && snake.dir.y === 0) {
     snake.setDir(0, 1);
-  } 
-  else if (keyCode === LEFT_ARROW && snake.xdir === 0) {
+  } else if (keyCode === LEFT_ARROW && snake.dir.x === 0) {
     snake.setDir(-1, 0);
-  } 
-  else if (keyCode === RIGHT_ARROW && snake.xdir === 0) {
+  } else if (keyCode === RIGHT_ARROW && snake.dir.x === 0) {
     snake.setDir(1, 0);
-  } 
-  else if (key === 'R' || key === 'r') {
+  }
+    // W, A, S, D keys
+    else if ((key === 'W' || key === 'w') && snake.dir.y === 0) {
+    snake.setDir(0, -1);
+  } else if ((key === 'S' || key === 's') && snake.dir.y === 0) {
+    snake.setDir(0, 1);
+  } else if ((key === 'A' || key === 'a') && snake.dir.x === 0) {
+    snake.setDir(-1, 0);
+  } else if ((key === 'D' || key === 'd') && snake.dir.x === 0) {
+    snake.setDir(1, 0);
+  } else if (key === 'R' || key === 'r') {
     restartGame();
   }
 }
 
 function restartGame() {
+  grid = Array.from({ length: rows }, () => Array(cols).fill(0));
+  snake = new Snake();
   score = 0;
   gameOver = false;
-  snake = new Snake();
-  foodLocation();
-  frameRate(10); 
+  frameRate(10);
+  placeFood();
 }
 
 class Snake {
   constructor() {
-    this.body = [];
-    this.body[0] = createVector(floor(cols / 2), floor(rows / 2));
-    this.xdir = 0;
-    this.ydir = 0;
-    // Growth counter to control segments added when eating
-    this.growth = 0; 
+    this.body = [{ x: floor(cols / 2), y: floor(rows / 2) }];
+    this.dir = { x: 0, y: 0 };
+
+    // Mark the initial snake position on the grid
+    grid[this.body[0].y][this.body[0].x] = 1;
   }
 
   setDir(x, y) {
-    this.xdir = x;
-    this.ydir = y;
+    this.dir = { x, y };
   }
 
   update() {
-    let head = this.body[this.body.length - 1].copy();
-    head.x += this.xdir * gridSize;
-    head.y += this.ydir * gridSize;
+    if (this.dir.x === 0 && this.dir.y === 0) return; // No movement initially
+
+    // Get the current head and calculate new head position
+    let head = this.body[this.body.length - 1];
+    let newHead = { x: head.x + this.dir.x, y: head.y + this.dir.y };
+
+    // Check for collisions (walls or self)
+    if (
+      newHead.x < 0 || newHead.x >= cols ||
+      newHead.y < 0 || newHead.y >= rows ||
+      grid[newHead.y][newHead.x] === 1
+    ) {
+      gameOver = true;
+      return;
+    }
 
     // Add the new head to the body
-    this.body.push(head);
+    this.body.push(newHead);
 
-    // Remove the tail unless the snake is growing
-    if (this.growth > 0) {
-      this.growth--;
+    // Check if food is eaten
+    if (grid[newHead.y][newHead.x] === 2) {
+      score++;
+      placeFood();
+    } else {
+      // Remove the tail if no food was eaten
+      let tail = this.body.shift();
+      grid[tail.y][tail.x] = 0; // Clear the tail from the grid
     }
-    else {
-      this.body.shift();
-    }
-  }
 
-  grow() {
-    // Increase the growth counter
-    this.growth += 1; 
-  }
-
-  eat(pos) {
-    let head = this.body[this.body.length - 1];
-    // Check if head position matches food position
-    if (head.x === pos.x && head.y === pos.y) {
-      this.grow();
-      return true;
-    }
-    return false;
-  }
-
-  endGame() {
-    let head = this.body[this.body.length - 1];
-    // Check wall collision
-    if (head.x < 0 || head.x >= width || head.y < 0 || head.y >= height) {
-      return true;
-    }
-    // Check self-collision
-    return this.body.slice(0, -1).some(segment => segment.equals(head));
+    // Update the grid with the new head position
+    grid[newHead.y][newHead.x] = 1;
   }
 
   show() {
-    for (let i = 0; i < this.body.length; i++) {
+    for (let segment of this.body) {
       fill(0);
-      rect(this.body[i].x, this.body[i].y, gridSize, gridSize);
+      rect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
     }
   }
 }
