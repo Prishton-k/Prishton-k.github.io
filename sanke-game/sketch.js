@@ -66,7 +66,7 @@ function draw() {
   
   fill(0);
   textSize(16);
-  // Display score
+  // Display score for how mouch food you have 
   text("Score: " + score, 10, 20); 
 }
 
