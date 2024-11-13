@@ -1,3 +1,9 @@
+//Digdarshan KC
+//Computer Science 30
+//Nov 11 2024
+// Mr Dan Schellenberg 
+//Extra for expert is the multiple color for each food and dynamic speed increase 
+
 let grid;
 let gridSize = 20; // Size of each grid cell
 let cols, rows;
@@ -5,6 +11,7 @@ let snake;
 let food;
 let score = 0;
 let gameOver = false;
+let foodColor; // This will store the random color of the food
 
 function setup() {
   createCanvas(400, 400);
@@ -16,7 +23,7 @@ function setup() {
   grid = Array.from({ length: rows }, () => Array(cols).fill(0));
 
   snake = new Snake();
-  placeFood();
+  placeFood(); // Place initial food
 }
 
 function draw() {
@@ -37,8 +44,8 @@ function draw() {
   snake.update();
   snake.show();
 
-  // Draw the food
-  fill(foodColor);
+  // Draw the food with the random color
+  fill(foodColor); // Use the random color for food
   ellipse(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2, gridSize, gridSize);
 
   fill(0);
@@ -62,8 +69,7 @@ function placeFood() {
     let spot = random(emptyCells); // Pick a random empty cell
     food = spot;
     grid[food.y][food.x] = 2; // Mark food on the grid
-    // Assign a random color to the food
-    foodColor = color(random(255), random(255), random(255));
+    foodColor = color(random(255), random(255), random(255)); // Assign a random color to the food
   } else {
     gameOver = true; // No space left for food
   }
@@ -80,8 +86,8 @@ function keyPressed() {
   } else if (keyCode === RIGHT_ARROW && snake.dir.x === 0) {
     snake.setDir(1, 0);
   }
-    // W, A, S, D keys
-    else if ((key === 'W' || key === 'w') && snake.dir.y === 0) {
+  // W, A, S, D keys
+  else if ((key === 'W' || key === 'w') && snake.dir.y === 0) {
     snake.setDir(0, -1);
   } else if ((key === 'S' || key === 's') && snake.dir.y === 0) {
     snake.setDir(0, 1);
@@ -100,7 +106,7 @@ function restartGame() {
   score = 0;
   gameOver = false;
   frameRate(10);
-  placeFood();
+  placeFood(); // Re-place food
 }
 
 class Snake {
@@ -139,7 +145,7 @@ class Snake {
     // Check if food is eaten
     if (grid[newHead.y][newHead.x] === 2) {
       score++;
-      placeFood();
+      placeFood(); // Re-place food with random color
     } else {
       // Remove the tail if no food was eaten
       let tail = this.body.shift();
