@@ -50,6 +50,10 @@ function draw() {
 
   fill(0);
   textSize(16);
+<<<<<<< HEAD
+  // Display score for how mouch food you have 
+  text("Score: " + score, 10, 20); 
+=======
   text("Score: " + score, 10, 20);
 }
 
@@ -69,6 +73,7 @@ function placeFood() {
   } else {
     gameOver = true; // No space left for food
   }
+>>>>>>> e4c4aa003e6470e0442b544e319f8c8156f6c02b
 }
 
 function keyPressed() {
