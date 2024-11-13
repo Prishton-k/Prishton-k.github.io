@@ -1,9 +1,3 @@
-//Digdarshan KC
-//Computer Science 30
-//Nov 11 2024
-// Mr Dan Schellenberg 
-//Extra for expert is the multiple color for each food and dynamic speed increase 
-
 let grid;
 let gridSize = 20; // Size of each grid cell
 let cols, rows;
@@ -12,6 +6,11 @@ let food;
 let score = 0;
 let gameOver = false;
 let foodColor; // This will store the random color of the food
+let bgImage;
+
+function preload() {
+  bgImage = loadImage("bg.png");
+}
 
 function setup() {
   createCanvas(400, 400);
@@ -39,7 +38,7 @@ function draw() {
     return;
   }
 
-  background(220);
+  image(bgImage, 0, 0);
 
   snake.update();
   snake.show();
@@ -50,10 +49,6 @@ function draw() {
 
   fill(0);
   textSize(16);
-<<<<<<< HEAD
-  // Display score for how mouch food you have 
-  text("Score: " + score, 10, 20); 
-=======
   text("Score: " + score, 10, 20);
 }
 
@@ -61,7 +56,7 @@ function placeFood() {
   let emptyCells = [];
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      if (grid[r][c] === 0) emptyCells.push({ x: c, y: r }); // Track empty cells
+      if (grid[r][c] === 0 && emptyCells.push({x :c , y :r})){} // Track empty cells
     }
   }
 
@@ -70,32 +65,39 @@ function placeFood() {
     food = spot;
     grid[food.y][food.x] = 2; // Mark food on the grid
     foodColor = color(random(255), random(255), random(255)); // Assign a random color to the food
-  } else {
+  } 
+  else {
     gameOver = true; // No space left for food
   }
->>>>>>> e4c4aa003e6470e0442b544e319f8c8156f6c02b
 }
 
 function keyPressed() {
   if (keyCode === UP_ARROW && snake.dir.y === 0) {
     snake.setDir(0, -1);
-  } else if (keyCode === DOWN_ARROW && snake.dir.y === 0) {
+  } 
+  else if (keyCode === DOWN_ARROW && snake.dir.y === 0) {
     snake.setDir(0, 1);
-  } else if (keyCode === LEFT_ARROW && snake.dir.x === 0) {
+  } 
+  else if (keyCode === LEFT_ARROW && snake.dir.x === 0) {
     snake.setDir(-1, 0);
-  } else if (keyCode === RIGHT_ARROW && snake.dir.x === 0) {
+  } 
+  else if (keyCode === RIGHT_ARROW && snake.dir.x === 0) {
     snake.setDir(1, 0);
   }
   // W, A, S, D keys
   else if ((key === 'W' || key === 'w') && snake.dir.y === 0) {
     snake.setDir(0, -1);
-  } else if ((key === 'S' || key === 's') && snake.dir.y === 0) {
+  } 
+  else if ((key === 'S' || key === 's') && snake.dir.y === 0) {
     snake.setDir(0, 1);
-  } else if ((key === 'A' || key === 'a') && snake.dir.x === 0) {
+  } 
+  else if ((key === 'A' || key === 'a') && snake.dir.x === 0) {
     snake.setDir(-1, 0);
-  } else if ((key === 'D' || key === 'd') && snake.dir.x === 0) {
+  } 
+  else if ((key === 'D' || key === 'd') && snake.dir.x === 0) {
     snake.setDir(1, 0);
-  } else if (key === 'R' || key === 'r') {
+  } 
+  else if (key === 'R' || key === 'r') {
     restartGame();
   }
 }
@@ -123,8 +125,9 @@ class Snake {
   }
 
   update() {
-    if (this.dir.x === 0 && this.dir.y === 0) return; // No movement initially
-
+    if (this.dir.x === 0 && this.dir.y === 0){
+      return; // No movement initially
+    }
     // Get the current head and calculate new head position
     let head = this.body[this.body.length - 1];
     let newHead = { x: head.x + this.dir.x, y: head.y + this.dir.y };
@@ -146,7 +149,8 @@ class Snake {
     if (grid[newHead.y][newHead.x] === 2) {
       score++;
       placeFood(); // Re-place food with random color
-    } else {
+    } 
+    else {
       // Remove the tail if no food was eaten
       let tail = this.body.shift();
       grid[tail.y][tail.x] = 0; // Clear the tail from the grid
