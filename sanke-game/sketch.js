@@ -7,9 +7,10 @@ let score = 0;
 let gameOver = false;
 let foodColor; // This will store the random color of the food
 let bgImage;
+let coinSound;
 
 function preload() {
-  bgImage = loadImage("bg.png");
+  coinSound = loadSound("coin.mp3");
 }
 
 function setup() {
@@ -38,8 +39,7 @@ function draw() {
     return;
   }
 
-  image(bgImage, 0, 0);
-
+  background(170);
   snake.update();
   snake.show();
 
@@ -50,6 +50,10 @@ function draw() {
   fill(0);
   textSize(16);
   text("Score: " + score, 10, 20);
+}
+
+function mousePressed() {
+  coinSound.play();
 }
 
 function placeFood() {
