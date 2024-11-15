@@ -6,8 +6,6 @@ let food;
 let score = 0;
 let gameOver = false;
 let foodColor; // This will store the random color of the food
-let bgImage;
-let coinSound;
 
 
 function setup() {
@@ -15,14 +13,14 @@ function setup() {
   cols = floor(width / gridSize);
   rows = floor(height / gridSize);
   frameRate(10);
-
-  // Initialize grid as a 2D array
   grid = Array.from({ length: rows }, () => Array(cols).fill(0));
-
   snake = new Snake();
+
   // Place initial food
-  placeFood(); 
+  placeFood();
+
 }
+
 
 function draw() {
   if (gameOver) {
