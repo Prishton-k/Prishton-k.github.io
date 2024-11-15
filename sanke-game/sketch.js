@@ -9,9 +9,6 @@ let foodColor; // This will store the random color of the food
 let bgImage;
 let coinSound;
 
-function preload() {
-  coinSound = loadSound("coin.mp3");
-}
 
 function setup() {
   createCanvas(400, 400);
@@ -23,7 +20,8 @@ function setup() {
   grid = Array.from({ length: rows }, () => Array(cols).fill(0));
 
   snake = new Snake();
-  placeFood(); // Place initial food
+  // Place initial food
+  placeFood(); 
 }
 
 function draw() {
@@ -52,23 +50,24 @@ function draw() {
   text("Score: " + score, 10, 20);
 }
 
-function mousePressed() {
-  coinSound.play();
-}
 
 function placeFood() {
   let emptyCells = [];
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      if (grid[r][c] === 0 && emptyCells.push({x :c , y :r})){} // Track empty cells
+      // Track empty cells
+      if (grid[r][c] === 0 && emptyCells.push({x :c , y :r})){} 
     }
   }
 
   if (emptyCells.length > 0) {
-    let spot = random(emptyCells); // Pick a random empty cell
+    // Pick a random empty cell
+    let spot = random(emptyCells); 
     food = spot;
-    grid[food.y][food.x] = 2; // Mark food on the grid
-    foodColor = color(random(255), random(255), random(255)); // Assign a random color to the food
+    // Mark food on the grid
+    grid[food.y][food.x] = 2; 
+    // Assign a random color to the food
+    foodColor = color(random(255), random(255), random(255)); 
   } 
   else {
     gameOver = true; // No space left for food
