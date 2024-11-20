@@ -18,7 +18,8 @@
 - [character grid](character_move)
 - [grid game](snake-game)
 - [walker_opp](opp-demo)
-- [firework](fire_work)
+- [firework1](fire_work1)
+- [CONNECTED NOTES OPP](notes)
 # Projects
 - [intractive scene](interactive_scene)
 - [Arrays and Object Notation](array_notation)
