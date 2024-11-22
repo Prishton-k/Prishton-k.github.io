@@ -20,6 +20,7 @@
 - [walker_opp](opp-demo)
 - [firework1](fire_work1)
 - [CONNECTED NOTES OPP](notes)
+- [COLLIDE 2D](collide)
 # Projects
 - [intractive scene](interactive_scene)
 - [Arrays and Object Notation](array_notation)
