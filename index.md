@@ -21,6 +21,7 @@
 - [firework1](fire_work1)
 - [CONNECTED NOTES OPP](notes)
 - [COLLIDE 2D](collide)
+- [Local Storage Demo0](storage)
 # Projects
 - [intractive scene](interactive_scene)
 - [Arrays and Object Notation](array_notation)
